@@ -1,0 +1,27 @@
+{
+	"name": "fredags-dak-discord-bot",
+	"version": "1.0.0",
+	"description": " A Discord bot that listens for youtube links in a given channel and saves them... Somewhere, and tells you if the link has previously been posted.",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"watch": "nodemon index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/allanrehhoff/fredags-dak-discord-bot.git"
+	},
+	"author": "Allan Rehhoff <allan.rehhoff@gmail.com>",
+	"license": "WTFPL",
+	"bugs": {
+		"url": "https://github.com/allanrehhoff/fredags-dak-discord-bot/issues"
+	},
+	"homepage": "https://github.com/allanrehhoff/fredags-dak-discord-bot#readme",
+	"dependencies": {
+		"axios": "^0.24.0",
+		"discord.js": "^13.2.0",
+		"dotenv": "^10.0.0",
+		"get-urls": "^10.0.1",
+		"nodemon": "^2.0.14"
+	}
+}
