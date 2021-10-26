@@ -1,6 +1,16 @@
 # Fredags Dak Discord Bot
 Personal project - A Discord bot that listens for youtube links in a given channel and saves them... Somewhere, and tells you if the link has previously been posted.
 
+# Before you start
+To prevent `npm` from installing/bloating your system with development-only dependencies, make sure that node.js is set up in `production` mode
+
+In short, set a system-wide environment variable `NODE_ENV=production`
+
+[Read the documentation](https://nodejs.dev/learn/nodejs-the-difference-between-development-and-production)
+
+Alternatively, you may force a production only install with `npm run install --production` instead of `npm install` listed under installation instructions.  
+But doing so is generally discouraged, as it will prevent the codebase from changing behaviour properly (depending on environment) during runtime.  
+
 # Installation instructions
 1. Rename .env-sample to .env
 2. Set the config values accordingly.
