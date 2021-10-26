@@ -4,7 +4,7 @@ Personal project - A Discord bot that listens for youtube links in a given chann
 # Before you start
 To prevent `npm` from installing/bloating your system with development-only dependencies, make sure that node.js is set up in `production` mode
 
-In short, set a system-wide environment variable `NODE_ENV=production`
+In short, set a environment variable `NODE_ENV=production`
 
 [Read the documentation](https://nodejs.dev/learn/nodejs-the-difference-between-development-and-production)
 
