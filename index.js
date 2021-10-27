@@ -1,4 +1,4 @@
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, MessageEmbed } = require('discord.js');
 const dotenv = require('dotenv').config();
 const getUrls = require('get-urls');
 const axios = require('axios');
@@ -21,29 +21,52 @@ bot.on('messageCreate', async function(message) {
 	// Do not remove...
 	if (message.author.bot) return;
 
+	var endpoint = process.env.API_URL + '/submit-entry';
+
+	var settings = {
+		auth: {
+			username: process.env.API_USER,
+			password: process.env.API_PASS
+		},
+		responseType: 'json'
+	};
+
+	var payload = {};
+
+	let submittedBy = message.member.displayName ? message.member.displayName : message.author.username;
+
+	payload.submitted_by = submittedBy;
+
+	// Realistically one would only ever submit one url per message.
+	// But this helps preventing annyoing things from being ever an issue.
 	for(url of getUrls(message.content)) {
-		var endpoint = process.env.API_URL + '/submit-entry';
-
-		var payload = {
-			url: url
-		};
-
-		var settings = {
-			auth: {
-				username: process.env.API_USER,
-				password: process.env.API_PASS
-			},
-			responseType: 'json'
-		};
+		payload.url = url;
 
 		try {
+			console.log("[LOG] Transmitting payload");
+			console.log("[LOG] " + JSON.stringify(payload));
+
 			let response = await axios.post(endpoint, payload, settings);
 			let data = response.data;
 
-			message.channel.send(data.message);
+			if(Array.isArray(data.message)) {
+				for (let row of data.message) {
+					if(typeof row == "object" && "callback" in row) {
+						message[row.callback](...row.params);
+					} else {
+						message.channel.send(row);	
+					}
+				}
+			} else {
+				message.channel.send(data.message);
+			}
+
+			console.log("[LOG] Recieved response");
+			console.log("[LOG] " + JSON.stringify(data));
 		} catch(e) {
-			console.log("[ERR]" + e.message);
-			message.channel.send("An error has occurred.");
+			console.log("[ERR] " + e.message);
+			console.log("[ERR] Exception Caught: ", e);
+			message.channel.send("An error has occurred, please notify the administrator.");
 		}
 
 	}
