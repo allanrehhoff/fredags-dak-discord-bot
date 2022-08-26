@@ -1,5 +1,5 @@
 const { Client, Intents, MessageEmbed } = require('discord.js');
-//const dotenv = require('dotenv').config();
+const dotenv = require('dotenv').config();
 const getUrls = require('get-urls');
 const axios = require('axios');
 
