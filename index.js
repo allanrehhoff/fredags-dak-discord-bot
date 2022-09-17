@@ -1,6 +1,5 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const dotenv = require('dotenv').config();
-const getUrls = require('get-urls');
 const axios = require('axios');
 
 //if (dotenv.error) throw dotenv.error; // Lol, someone made an error or has a missing config file, better tell them.
