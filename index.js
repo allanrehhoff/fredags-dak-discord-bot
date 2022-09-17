@@ -1,6 +1,9 @@
 const { Client, GatewayIntentBits } = require('discord.js');
-const dotenv = require('dotenv').config();
 const axios = require('axios');
+
+if (process.env.NODE_ENV !== 'production') {
+	require('dotenv').config();
+}
 
 const bot = new Client({
 	intents: [
@@ -30,16 +33,19 @@ bot.on('messageCreate', async function(message) {
 		responseType: 'json'
 	};
 
-	var payload = {};
-
-	let submittedBy = message.member.displayName ? message.member.displayName : message.author.username;
-
-	payload.submitted_by = submittedBy;
+	var submittedBy = message.member.displayName ? message.member.displayName : message.author.username;
 
 	// Realistically one would only ever submit one url per message.
 	// But this helps preventing annyoing things from being ever an issue.
 	for(embed of message.embeds) {
-		payload.url = embed.url;
+		let payload = {
+			url: embed.url,
+			submitted_by: submittedBy
+		};
+
+		// Ignore urls that doesn't not seem to be
+		// a youtube url, (including short urls)
+		if(embed.url.includes("yout") !== true) return;
 
 		try {
 			console.log("[LOG] Transmitting payload");
