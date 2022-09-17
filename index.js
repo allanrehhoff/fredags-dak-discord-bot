@@ -1,15 +1,22 @@
-const { Client, Intents, MessageEmbed } = require('discord.js');
+const { Client, GatewayIntentBits } = require('discord.js');
 const dotenv = require('dotenv').config();
 const getUrls = require('get-urls');
 const axios = require('axios');
 
 //if (dotenv.error) throw dotenv.error; // Lol, someone made an error or has a missing config file, better tell them.
 
-const bot = new Client( {
-	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
-    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
-});
+//const bot = new Client( {
+//	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
+//    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
+//});
 
+const bot = new Client({
+	intents: [
+		GatewayIntentBits.Guilds,
+		GatewayIntentBits.GuildMessages,
+		GatewayIntentBits.MessageContent
+	],
+});
 
 bot.on('ready', function() {
 	console.log(`[LOG] Logged in as ${bot.user.tag}!`);
@@ -39,8 +46,8 @@ bot.on('messageCreate', async function(message) {
 
 	// Realistically one would only ever submit one url per message.
 	// But this helps preventing annyoing things from being ever an issue.
-	for(url of getUrls(message.content)) {
-		payload.url = url;
+	for(embed of message.embeds) {
+		payload.url = embed.url;
 
 		try {
 			console.log("[LOG] Transmitting payload");
