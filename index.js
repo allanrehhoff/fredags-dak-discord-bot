@@ -2,13 +2,6 @@ const { Client, GatewayIntentBits } = require('discord.js');
 const dotenv = require('dotenv').config();
 const axios = require('axios');
 
-//if (dotenv.error) throw dotenv.error; // Lol, someone made an error or has a missing config file, better tell them.
-
-//const bot = new Client( {
-//	partials: ['MESSAGE', 'CHANNEL', 'REACTION'],
-//    intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
-//});
-
 const bot = new Client({
 	intents: [
 		GatewayIntentBits.Guilds,
@@ -74,7 +67,6 @@ bot.on('messageCreate', async function(message) {
 			console.log("[ERR] Exception Caught: ", e);
 			message.channel.send("An error has occurred, please notify the administrator.");
 		}
-
 	}
 });
 
