@@ -34,18 +34,19 @@ bot.on('messageCreate', async function(message) {
 	};
 
 	var submittedBy = message.member.displayName ? message.member.displayName : message.author.username;
+	var urls = message.content.match(/(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))?/mg);
 
 	// Realistically one would only ever submit one url per message.
 	// But this helps preventing annyoing things from being ever an issue.
-	for(embed of message.embeds) {
-		let payload = {
-			url: embed.url,
-			submitted_by: submittedBy
-		};
-
+	for(url of urls) {
 		// Ignore urls that doesn't not seem to be
 		// a youtube url, (including short urls)
-		if(embed.url.includes("yout") !== true) return;
+		if(url.includes("yout") !== true) return;
+
+		let payload = {
+			url: url,
+			submitted_by: submittedBy
+		};
 
 		try {
 			console.log("[LOG] Transmitting payload");
