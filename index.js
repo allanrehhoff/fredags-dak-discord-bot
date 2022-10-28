@@ -36,6 +36,8 @@ bot.on('messageCreate', async function(message) {
 	var submittedBy = message.member.displayName ? message.member.displayName : message.author.username;
 	var urls = message.content.match(/(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))?/mg);
 
+	if(urls == null) return;
+
 	// Realistically one would only ever submit one url per message.
 	// But this helps preventing annyoing things from being ever an issue.
 	for(url of urls) {
