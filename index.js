@@ -1,7 +1,12 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 const axios = require('axios');
 
-if (process.env.NODE_ENV !== 'production') {
+// Fallback to reading local .env file
+// if the current environment doesn't
+// seem to have what we need.
+// This increases compatibility with
+// certain "non standard" operation
+if (!process.env.BOT_TOKEN) {
 	require('dotenv').config();
 }
 
@@ -11,6 +16,16 @@ const bot = new Client({
 		GatewayIntentBits.GuildMessages,
 		GatewayIntentBits.MessageContent
 	],
+});
+
+// Listening for system SIGINT signal
+// allows us to "logout" or destroy
+// the Discord client before terminating
+process.on('SIGINT', function() {
+    console.log("\n[LOG] Logging out, SIGINT recieved");
+
+	bot.destroy();
+	process.exit();
 });
 
 bot.on('ready', function() {
