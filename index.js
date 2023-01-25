@@ -21,12 +21,14 @@ const bot = new Client({
 // Listening for system SIGINT signal
 // allows us to "logout" or destroy
 // the Discord client before terminating
-process.on('SIGINT', function() {
-    console.log("\n[LOG] Logging out, SIGINT recieved");
-
-	bot.destroy();
-	process.exit();
-});
+for(event of ["SIGINT", "SIGTERM", "SIGUSR1", "SIGUSR2", "uncaughtException"]) {
+	process.on(event, function() {
+		console.log(`\n[LOG] Logging out`);
+		
+		bot.destroy();
+		process.exit();
+	});
+};
 
 bot.on('ready', function() {
 	console.log(`[LOG] Logged in as ${bot.user.tag}!`);
