@@ -34,7 +34,7 @@ bot.on('messageCreate', async function(message) {
 	};
 
 	var submittedBy = message.member.displayName ? message.member.displayName : message.author.username;
-	var urls = message.content.match(/(?:(?:https?|ftp):\/\/|\b(?:[a-z\d]+\.))(?:(?:[^\s()<>]+|\((?:[^\s()<>]+|(?:\([^\s()<>]+\)))?\))+(?:\((?:[^\s()<>]+|(?:\(?:[^\s()<>]+\)))?\)|[^\s`!()\[\]{};:'".,<>?«»“”‘’]))?/mg);
+	var urls = message.content.match(/(https?:\/\/[^\s]+)/g);
 
 	if(urls == null) return;
 
@@ -72,11 +72,15 @@ bot.on('messageCreate', async function(message) {
 			console.log("[LOG] Recieved response");
 			console.log("[LOG] " + JSON.stringify(data));
 		} catch(e) {
-			console.log("[ERR] " + e.message);
 			console.log("[ERR] Exception Caught: ", e);
+			console.log("[ERR] " + e.message);
 			message.channel.send("An error has occurred, please notify the administrator.");
 		}
 	}
 });
 
 bot.login(process.env.BOT_TOKEN);
+
+// ...
+const express = require('express')
+express().listen(8999, () => {});
