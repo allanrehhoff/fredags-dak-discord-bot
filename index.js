@@ -80,7 +80,3 @@ bot.on('messageCreate', async function(message) {
 });
 
 bot.login(process.env.BOT_TOKEN);
-
-// ...
-const express = require('express')
-express().listen(8999, () => {});
