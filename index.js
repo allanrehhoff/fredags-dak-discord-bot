@@ -7,7 +7,9 @@ const axios = require('axios');
 // This increases compatibility with
 // certain "non standard" operation
 if (!process.env.BOT_TOKEN) {
-	require('dotenv').config();
+	require('dotenv').config({
+		path: __dirname + "/.env"
+	});
 }
 
 const bot = new Client({
